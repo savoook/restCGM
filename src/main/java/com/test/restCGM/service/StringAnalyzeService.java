@@ -16,7 +16,7 @@ public class StringAnalyzeService {
     private CountCharactersService countCharactersService;
     private RepeatingCharactersService repeatingCharactersService;
 
-    public Map<Character, List<Integer>> alalyze(String str, Set<Character> chars, Statistic statistic, AtomicInteger requestCount) {
+    public Map<Character, List<Integer>> analyze(String str, Set<Character> chars, Statistic statistic, AtomicInteger requestCount) {
         Map<Character, List<Integer>> symbols = new HashMap<>();
         requestCount.getAndIncrement();
         chars.forEach(c ->
@@ -28,11 +28,11 @@ public class StringAnalyzeService {
             info.add(countRepeate);
             symbols.put(c, info);
             if (statistic.getStatistic().containsKey(c)) {
-                List<Double> integers = statistic.getStatistic().get(c);
-                integers.set(0, integers.get(0) + 1);
-                integers.set(1, (integers.get(1) + countChar) / requestCount.get());
-                integers.set(2, (integers.get(2) + countRepeate) / requestCount.get());
-                integers.set(3, (double) requestCount.get());
+                List<Double> statInfo = statistic.getStatistic().get(c);
+                statInfo.set(0, statInfo.get(0) + 1);
+                statInfo.set(1, (statInfo.get(1)*statInfo.get(3) + countChar) / requestCount.get());
+                statInfo.set(2, (statInfo.get(2)*statInfo.get(3) + countRepeate) / requestCount.get());
+                statInfo.set(3, (double) requestCount.get());
             } else {
                 statistic.getStatistic().put(c, new ArrayList<>() {{
                     add(1d);

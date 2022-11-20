@@ -13,10 +13,10 @@ public class CorrectStatisticService {
     public void correct(Set<Character> chars, Statistic statistic, AtomicInteger requestCount) {
         for (Map.Entry<Character, List<Double>> entry : statistic.getStatistic().entrySet()) {
             if (!chars.contains(entry.getKey())) {
-                List<Double> value = entry.getValue();
-                value.set(1, value.get(1) * value.get(3) / requestCount.get());
-                value.set(2, value.get(2) * value.get(3) / requestCount.get());
-                value.set(3, (double) requestCount.get());
+                List<Double> statInfo = entry.getValue();
+                statInfo.set(1, statInfo.get(1) * statInfo.get(3) / requestCount.get());
+                statInfo.set(2, statInfo.get(2) * statInfo.get(3) / requestCount.get());
+                statInfo.set(3, (double) requestCount.get());
             }
         }
     }

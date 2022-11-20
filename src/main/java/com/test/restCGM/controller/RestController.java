@@ -33,7 +33,7 @@ public class RestController {
     IncomingRequest analyze(@RequestBody String str) {
         IncomingRequest incomingRequest = new IncomingRequest(str);
         Set<Character> chars = distinctCharacterService.distinct(str);
-        incomingRequest.setSymbols(stringAnalyzeService.alalyze(str, chars, statistic, requestCount));
+        incomingRequest.setSymbols(stringAnalyzeService.analyze(str, chars, statistic, requestCount));
         correctStatisticService.correct(chars, statistic, requestCount);
         return incomingRequest;
     }
